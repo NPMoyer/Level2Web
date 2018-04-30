@@ -3,6 +3,10 @@
 
 <title>Change Log</title>
 
+<head>
+<link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
+
 <body oncontextmenu="return false">
 <center><img src="logo.png" alt="AK Steel" width="192" height="28.8"></center>
 <h1><center>HSM Level 2 MMI Change Log</center></h1>
@@ -25,7 +29,7 @@ Fill in blanks for each new version
 </ul>	
 -->
 <center><b>*****</b></center>
-<h3>Version 217<br>Released 30-Apr-2018 by NPM</h3>
+<h3>Version 217 - <a href="PCAs/PCA 2444.pdf">PCA 2444</a><br>Released 30-Apr-2018 by NPM</h3>
 <b>New features</b>
 <ul>
 		FM Setup Data:
@@ -44,9 +48,10 @@ Fill in blanks for each new version
 </ul>	
 <ul>	
 		Alarms:
-	<li>New informational (white) alarm when a roll change/extraction is ended</li>
-	<li>New acknowledge (red) alarms when roll data cannot be verified and when L2 tries to calculate crown for a missing roll<br>
-		There will be no setup for this slab, fine if charging into RHF but don't discharge until roll data is verified</li>  
+	<li>New informational alarm when a roll change/extraction is ended, data is sent to L2</li>
+	<li>New critical alarm when roll data cannot be verified</li>
+	<li>New critical alarm when L2 tries to calculate crown for a missing roll<br>
+		There will be no setup for this slab if discharged from RHF</li>  
 </ul>
 <b>Bug Fixes</b>
 <ul>
@@ -72,8 +77,9 @@ Fill in blanks for each new version
 		DMC Profile Gauge:
 	<li>Pop up alarm is now displayed when there is no temperature data</li>
 	<li>FM exit pyrometers should be checked</li>
-
-	<br>FM Setup Data
+</ul>
+<ul>
+	FM Setup Data:
 	<li>New rolling strategy section: Displays previous and current rolling strategy modes<br>
 		Modes: Load (Good), Force (Bad), Error (Bad)
 	<li>Also displays on the Advanced screen</li>
@@ -117,4 +123,9 @@ Fill in blanks for each new version
 	<li>General -> Set Slab Id can be used to check for ridging history</li>
 </ul>
 </body>
+
+<div class="footer">
+  <p><a href="Index.htm">Return to Index</a><br>
+  Revised: 04/30/18 by NPM</p>
+</div>
 </html>
