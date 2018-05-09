@@ -1,6 +1,2 @@
 *.db
-*.pdf
-people.js
-
-/PCAs
-/VAI Docs
+/res
