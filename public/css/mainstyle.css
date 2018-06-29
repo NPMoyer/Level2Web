@@ -1,23 +1,23 @@
 a:link {
-    color: red;
+    color: #BB0000;
     background-color: transparent;
     text-decoration: none;
 }
 
 a:visited {
-    color: red;
+    color: #BB0000;
     background-color: transparent;
     text-decoration: none;
 }
 
 a:hover {
-    color: red;
+    color: #BB0000;
     background-color: transparent;
     text-decoration: none;
 }
 
 a:active {
-    color: red;
+    color: #BB0000;
     background-color: transparent;
     text-decoration: none;
 }
