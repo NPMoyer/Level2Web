@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/mainstyle.css">
 	<link rel="stylesheet" type="text/css" href="../css/background.css">
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body oncontextmenu="return false">
@@ -15,8 +16,24 @@
 	<script type="text/javascript" src="../js/navbar.js"></script>
 <!--end of Navigation bar-->
 <h1><center>Level 2 Web</center></h1>
+<h2>Node Status</h2>
+<table id=result></table>
 
-
+<script>
+	var i = 0;
+	var socket = io.connect('http://172.17.230.18:8000');
+	socket.on('update-msg', function (msg) {
+		if (i === 5){
+			i = 0;
+			$('#result').html(' ');
+			$('#result').append($('<tr>').text(msg));
+		} else {
+			$('#result').append($('<tr>').text(msg));
+			i++;
+		}
+	});
+	
+</script>
 </body>
 
 <!--Footer-->
