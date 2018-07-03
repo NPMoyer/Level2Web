@@ -11,16 +11,15 @@ app.get('/', function (req, res) {
     res.redirect('html/Index.htm');
 });
 
-var host2 = ['MSODT2', 'MSODT3', 'MSOHSM', 'MSOAOD', 'MSOEAF'];
+var hostNames = ['MSODT2', 'MSODT3', 'MSOHSM', 'MSOHSA', 'MSOCC1', 'MSOAOD', 'MSOEAF'];
 
 var frequency = 15000; //15 seconds
 
-host2.forEach(function(host){
+hostNames.forEach(function(host){
     setInterval(function() {
         ping.sys.probe(host, function(active){
-            var info = active ? host + ' = Online' : host + ' = Offline';
+            var info = active ? 'Online' : 'Offline';
             io.sockets.emit('update-msg', info);
-            console.log(info);
         });
     }, frequency);
 });
