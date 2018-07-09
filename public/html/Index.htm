@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/table.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="../js/status.js"></script>
 </head>
 
 <body oncontextmenu="return false">
@@ -18,7 +19,7 @@
 <!--end of Navigation bar-->
 <center>
 	<h1>Level 2 Web</h1>
-	<h2>Node Status</h2>
+	<h2>Server Status</h2>
 	<table id="results">
 		<tr>
 			<th>MSODT2</th>
@@ -29,35 +30,17 @@
 			<th>MSOAOD</th>
 			<th>MSOEAF</th>
 		</tr>
+		<tr>
+			<td>Loading...</td>
+			<td>Loading...</td>
+			<td>Loading...</td>
+			<td>Loading...</td>
+			<td>Loading...</td>
+			<td>Loading...</td>
+			<td>Loading...</td>
+		</tr>
 	</table>
 </center>
-
-<script>
-	$(document).ready(connection());
-
-	function connection(){
-		var socket = io.connect('http://172.17.230.18:8000');
-	
-		var i = 0;
-
-		socket.on('update-msg', function (msg) {	
-			if (i == 0){
-				$('#results').html('<tr><th>MSODT2</th><th>MSODT3</th><th>MSOHSM</th>' + 
-					'<th>MSOHSA</th><th>MSOCC1</th><th>MSOAOD</th><th>MSOEAF</th></tr><tr>');
-			}
-
-			$('#results').append('<td>' + msg);
-			i++;
-
-			if (i != 7){
-				$('#results').append('</td>');			
-			} else {
-				i = 0;
-				$('#results').append('</td></tr>');
-			}
-		});
-	}
-</script>
 </body>
 
 <!--Footer-->
