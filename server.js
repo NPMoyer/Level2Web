@@ -24,7 +24,7 @@ hostNames.forEach(function(host){
     }, frequency);
 });
 
-server.listen(8000, function () {
+server.listen(80, function () {
 
     var host = server.address().address;
     var port = server.address().port;
