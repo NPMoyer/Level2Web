@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 
 var hostNames = ['MSODT2', 'MSODT3', 'MSOHSM', 'MSOHSA', 'MSOCC1', 'MSOAOD', 'MSOEAF'];
 
-var frequency = 15000; //15 seconds
+var frequency = 30000; //30 seconds
 
 hostNames.forEach(function(host){
     setInterval(function() {
