@@ -1,7 +1,7 @@
 $(document).ready(connection());
 
 function connection(){
-    var socket = io.connect('http://172.17.230.18');
+    var socket = io('/index');
 
     var i = 0;
 
