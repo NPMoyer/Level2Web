@@ -24,6 +24,32 @@ hostNames.forEach(function(host){
     }, frequency);
 });
 
+users = [];
+io.on('connection', function(socket) {
+    // Get client IP Address
+    var ip = socket.request.connection.remoteAddress;
+    if (ip.substr(0,7) == "::ffff:"){
+        ip = ip.replace("::ffff:", "");
+    }
+    console.log('New connection from ' + ip);
+
+    socket.on('setUsername', function(data) {
+        console.log(ip + ":" + data);
+        
+        if(users.indexOf(data) > -1) {
+            socket.emit('userExists', data + ' username is taken! Try some other username.');
+        } else {
+            users.push(data);
+            socket.emit('userSet', {username: data});
+        }
+    });
+    
+    socket.on('msg', function(data) {
+        //Send message to everyone
+        io.sockets.emit('newmsg', data);
+    })
+});
+
 server.listen(80, function () {
 
     var host = server.address().address;
