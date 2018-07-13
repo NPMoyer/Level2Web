@@ -8,7 +8,7 @@ var ping = require('ping');
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-    res.redirect('html/Index.htm');
+    res.redirect('html/index.htm');
 });
 
 var hostNames = ['MSODT2', 'MSODT3', 'MSOHSM', 'MSOHSA', 'MSOCC1', 'MSOAOD', 'MSOEAF'];
@@ -16,16 +16,22 @@ var frequency = 30000; //30 seconds
 var nspIndex = io.of('/index');
 var nspChat = io.of('/chat');
 
+users = [];
+ids = [];
+
 hostNames.forEach(function(host){
     setInterval(function() {
+        // Update index.htm with status of servers
         ping.sys.probe(host, function(active){
             var info = active ? 'Online' : 'Offline';
-            nspIndex.sockets.emit('update-msg', info);
+            nspIndex.emit('update-msg', info);
         });
+
+        //  Update chat.htm with users currently connected
+        nspChat.emit('usersActive', users);
     }, frequency);
 });
 
-users = [];
 nspChat.on('connection', function(socket)  {
     // Get client IP Address
     var ip = socket.request.connection.remoteAddress;
@@ -51,6 +57,7 @@ nspChat.on('connection', function(socket)  {
             socket.emit('userExists', data + ' username is taken! Try some other username.');
         } else {
             users.push(data);
+            ids.push(socket.id);
             socket.emit('userSet', {username: data});
             console.log(ip + " set as " + data);
         }
@@ -58,12 +65,16 @@ nspChat.on('connection', function(socket)  {
     
     socket.on('msg', function(data) {
         //Send message to everyone
-        io.sockets.emit('newmsg', data);
+        nspChat.emit('newmsg', data);
         console.log(data.user + ": " + data.message);
     });
 
-    socket.on('disconnect', function(data) {
-        console.log(data + ' disconnected');
+    socket.on('disconnect', function() {
+        // Remove the user from the array
+        var index = ids.indexOf(socket.id);
+        ids.splice(index, 1);
+        users.splice(index, 1);
+        console.log(socket.id + ' disconnected');
     });
 });
 

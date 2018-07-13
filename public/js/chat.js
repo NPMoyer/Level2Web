@@ -14,7 +14,6 @@ socket.on('userSet', function(data) {
     document.getElementById('input-container').innerHTML = '<input type = "text" id = "message">\
     <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
     <div id = "message-container"></div>';
-    document.getElementById("users-container").innerHTML += user + '</br>';
 });
 
 function sendMessage() {
@@ -29,5 +28,13 @@ socket.on('newmsg', function(data) {
     if(user) {
     document.getElementById('message-container').innerHTML += '<div><b>' + 
         data.user + '</b>: ' + data.message + '</div>';
+    }
+});
+
+socket.on('usersActive', function(data) {
+    document.getElementById("users-container").innerHTML = "";
+    
+    for (var i = 0; i < data.length; i++){
+        document.getElementById("users-container").innerHTML += user;
     }
 });
