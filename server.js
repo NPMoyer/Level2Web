@@ -12,7 +12,8 @@ app.get('/', function (req, res) {
 });
 
 var hostNames = ['MSODT2', 'MSODT3', 'MSOHSM', 'MSOHSA', 'MSOCC1', 'MSOAOD', 'MSOEAF'];
-var frequency = 30000; //30 seconds
+var frequencyPing = 30000; //30 seconds
+var frequencyUsers = 10000; //10 seconds
 var nspIndex = io.of('/index');
 var nspChat = io.of('/chat');
 
@@ -26,17 +27,26 @@ hostNames.forEach(function(host){
             var info = active ? 'Online' : 'Offline';
             nspIndex.emit('update-msg', info);
         });
-
-        //  Update chat.htm with users currently connected
-        nspChat.emit('usersActive', users);
-    }, frequency);
+    }, frequencyPing);
 });
 
 nspChat.on('connection', function(socket)  {
+    setInterval(function() {
+        //  Update chat.htm with users currently connected
+        nspChat.emit('usersActive', users);
+    }, frequencyUsers);
+
     // Get client IP Address
     var ip = socket.request.connection.remoteAddress;
     if (ip.substr(0,7) == "::ffff:"){
         ip = ip.replace("::ffff:", "");
+    }
+
+    if (ip == "172.17.230.133"){
+        var name = 'Nick Moyer';
+        users.push(name);
+        ids.push(socket.id);
+        socket.emit('setUsernamePreset', 'Nick Moyer');
     }
 
     var date = new Date();
@@ -60,6 +70,7 @@ nspChat.on('connection', function(socket)  {
             ids.push(socket.id);
             socket.emit('userSet', {username: data});
             console.log(ip + " set as " + data);
+            nspChat.emit('connected', data);
         }
     });
     
@@ -72,9 +83,11 @@ nspChat.on('connection', function(socket)  {
     socket.on('disconnect', function() {
         // Remove the user from the array
         var index = ids.indexOf(socket.id);
+        var user = users[index];
+        nspChat.emit('disconnected', user);
+        console.log(user + ' disconnected');
         ids.splice(index, 1);
         users.splice(index, 1);
-        console.log(socket.id + ' disconnected');
     });
 });
 

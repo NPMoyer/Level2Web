@@ -1,0 +1,43 @@
+input {
+    width: 75%;
+}
+
+.mess { 
+    grid-area: mess; 
+    position: fixed;
+    bottom: 60px;
+    top: 125px;
+    left: 5px;
+    width: 78%
+}
+
+.input { 
+    grid-area: main; 
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+}
+
+.users { 
+    grid-area: users; 
+    position: fixed;
+    bottom: 60px;
+    top: 125px;
+    width: 15%;
+    right: 5px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'mess users'
+        'input input';
+}
+
+.grid-container > div {
+    border: 2px solid;
+    padding: 10px;
+    font-size: 20px;
+    background: #b1b1b1;
+}

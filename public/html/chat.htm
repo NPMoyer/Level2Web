@@ -19,20 +19,15 @@
 <!--end of Navigation bar-->
 <h1><center>Level 2 Chat Support</center></h1>
 
-<h5>Users Online:</h5>
-<div id = "users-container"></div>
-</br>
-<div id = "error-container"></div>
-</br>
-<div id = "input-container">
-    <input id = "name" type = "text" name = "name" value = "" placeholder = "Enter your name">
-    <button type = "button" name = "button" onclick = "setUsername()">
-            Begin chat session
-        </button>
+<div class="grid-container">
+  <div class = "mess" id = "message-container"></div>
+  <div class = "users" id = "users-container"><b>Users Online</b></div>
+  <div class = "input" id = "input-container">
+      <div id = "error-container"></div>
+      <input id = "name" type = "text" name = "name" value = "" placeholder = "Enter your name">
+      <button type = "button" name = "button" onclick = "setUsername()">
+              Begin chat session
+          </button>
+  </div>
 </div>
-
-<!--Footer-->
-<div id="footer-placeholder"></div>
-<script type="text/javascript" src="../js/footer.js"></script>
-<!--end of Footer-->
 </html>

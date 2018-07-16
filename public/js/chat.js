@@ -11,9 +11,8 @@ socket.on('userExists', function(data) {
 
 socket.on('userSet', function(data) {
     user = data.username;
-    document.getElementById('input-container').innerHTML = '<input type = "text" id = "message">\
-    <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
-    <div id = "message-container"></div>';
+    document.getElementById('input-container').innerHTML = '<input type = "text" id = "message">' +
+        '<button type = "button" name = "button" onclick = "sendMessage()">Send</button>';
 });
 
 function sendMessage() {
@@ -32,9 +31,23 @@ socket.on('newmsg', function(data) {
 });
 
 socket.on('usersActive', function(data) {
-    document.getElementById("users-container").innerHTML = "";
-    
+    document.getElementById("users-container").innerHTML = "<b>Users Online</b><br>";
+
     for (var i = 0; i < data.length; i++){
-        document.getElementById("users-container").innerHTML += user;
+        document.getElementById("users-container").innerHTML += data[i];
+        document.getElementById("users-container").innerHTML += "</br>";
     }
+});
+
+socket.on('disconnected', function(data) {
+    document.getElementById('message-container').innerHTML += '<i>' + data + ' has left the chat<i></br>';
+});
+
+socket.on('connected', function(data) {
+    document.getElementById('message-container').innerHTML += '<i>' + data + ' has joined the chat<i></br>';
+});
+
+socket.on('setUsernamePreset', function(data){
+    document.getElementById('name').value = data;
+    setUsername();
 });
