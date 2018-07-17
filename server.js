@@ -31,13 +31,15 @@ hostNames.forEach(function(host){
 });
 
 nspChat.on('connection', function(socket)  {
+    var date = new Date();
+    var ip = socket.request.connection.remoteAddress;
+
     setInterval(function() {
         //  Update chat.htm with users currently connected
         nspChat.emit('usersActive', users);
     }, frequencyUsers);
 
     // Get client IP Address
-    var ip = socket.request.connection.remoteAddress;
     if (ip.substr(0,7) == "::ffff:"){
         ip = ip.replace("::ffff:", "");
     }
@@ -49,7 +51,6 @@ nspChat.on('connection', function(socket)  {
         socket.emit('setUsernamePreset', 'Nick Moyer');
     }
 
-    var date = new Date();
     // For todays date;
     Date.prototype.today = function () { 
         return (((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+ this.getFullYear();
@@ -91,7 +92,7 @@ nspChat.on('connection', function(socket)  {
     });
 });
 
-server.listen(80, function () {
+server.listen(80, "127.0.0.1", function () {
 
     var host = server.address().address;
     var port = server.address().port;
