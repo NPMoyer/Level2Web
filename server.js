@@ -92,7 +92,7 @@ nspChat.on('connection', function(socket)  {
     });
 });
 
-server.listen(80, "127.0.0.1", function () {
+server.listen(80, "172.17.230.18", function () {
 
     var host = server.address().address;
     var port = server.address().port;
