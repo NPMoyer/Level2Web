@@ -8,7 +8,7 @@ How to get started with development:
    - Enter npm config set proxy http://proxy1.akst.com:3128
 6. Enter npm i to fetch and install all npm packages 
 7. Enter npm ls --depth=0 to view all installed pacages
-   - The necessary packages are express, ping and socket.io
+   - The necessary packages are express, mongodb, ping and socket.io
 8. Now you can test the site by highlighting server.js in VS code and pressing F5
    - Navigate to http://localhost to view it
    - As you make changes to the files, refresh the browser to view them once saved
@@ -20,4 +20,4 @@ How to run the server in production:
 1. Go to Automatn_Pub\Level 2 Web and open a new command window
 2. Enter node server.js
 3. Your computer is now a server capable of handling HTTP requests across the LAN
-4. Anyone can go to http://youripaddress adn they will be redirected to the website
+4. Anyone can go to http://youripaddress and they will be redirected to the website
