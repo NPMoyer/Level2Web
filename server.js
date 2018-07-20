@@ -95,15 +95,23 @@ nspChat.on('connection', function(socket)  {
     });
 });
 
-nspEmail.on('connection', function(socket) {
-    // Connect to the database
-    MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("mydb");
-        dbo.createCollection("users", function(err, res) {
-        if (err) throw err;
-        console.log("Collection created!");
-        db.close();
+nspEmail.on('connection', function(socket)  {
+    // Connect to the database and search for the email
+    socket.on('search', function(data){
+        MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("mydb");
+            var query = { email: data };
+
+            dbo.collection("users").find(query).toArray(function(err, result) {
+                if (err) throw err;
+                console.log(result);
+                if (result.length)
+                    socket.emit('found', result);
+                else
+                    socket.emit('notFound', result);
+                db.close();
+            });
         });
     });
 });
