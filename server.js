@@ -4,6 +4,8 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var ping = require('ping');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
 
 app.use(express.static('public'));
 
@@ -16,6 +18,7 @@ var frequencyPing = 30000; //30 seconds
 var frequencyUsers = 10000; //10 seconds
 var nspIndex = io.of('/index');
 var nspChat = io.of('/chat');
+var nspEmail = io.of('/email');
 
 users = [];
 ids = [];
@@ -89,6 +92,19 @@ nspChat.on('connection', function(socket)  {
         console.log(user + ' disconnected');
         ids.splice(index, 1);
         users.splice(index, 1);
+    });
+});
+
+nspEmail.on('connection', function(socket) {
+    // Connect to the database
+    MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        dbo.createCollection("users", function(err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        db.close();
+        });
     });
 });
 

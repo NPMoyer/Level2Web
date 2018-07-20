@@ -1,3 +1,5 @@
+var socket = io('/email');
+
 function display(){
 	var person = document.getElementById("fName").value + "." + document.getElementById("lName").value;
 
