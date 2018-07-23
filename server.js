@@ -47,12 +47,23 @@ nspChat.on('connection', function(socket)  {
         ip = ip.replace("::ffff:", "");
     }
 
-    if (ip == "172.17.230.133"){
-        var name = 'Nick Moyer';
-        users.push(name);
-        ids.push(socket.id);
-        socket.emit('setUsernamePreset', 'Nick Moyer');
-    }
+    // Search the database to find it the IP address is a predefined user
+    MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        var query = { address: ip };
+
+        dbo.collection("IPs").find(query).toArray(function(err, result) {
+            if (err) throw err;
+
+            if (result.length){
+                // IP was found in the DB, get the associated name
+                var name = result[0].name;
+                socket.emit('setUsernamePreset', name);
+            }
+            db.close();
+        });
+    });
 
     // For todays date;
     Date.prototype.today = function () { 
@@ -64,8 +75,10 @@ nspChat.on('connection', function(socket)  {
         return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
     };
 
+    // Log the connection
     console.log(date.today() + " " + date.timeNow() + " " + 'New connection from ' + ip);
 
+    // User has set their username
     socket.on('setUsername', function(data) {    
         if(users.indexOf(data) > -1) {
             socket.emit('userExists', data + ' username is taken! Try some other username.');
@@ -105,7 +118,7 @@ nspEmail.on('connection', function(socket)  {
 
             dbo.collection("users").find(query).toArray(function(err, result) {
                 if (err) throw err;
-                console.log(result);
+
                 if (result.length)
                     socket.emit('found', result);
                 else
