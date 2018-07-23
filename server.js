@@ -117,7 +117,7 @@ nspChat.on('connection', function(socket)  {
             users.push(data);
             ids.push(socket.id);
             socket.emit('userSet', {username: data});
-            loggger.info(ip + " set as " + data);
+            logger.info(ip + " set as " + data);
             nspChat.emit('connected', data);
         }
     });
