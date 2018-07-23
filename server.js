@@ -1,14 +1,14 @@
 var express = require('express');
 var http = require('http');
 var fs = require('fs');
+var app = express();
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var ping = require('ping');
 var MongoClient = require('mongodb').MongoClient;
 var winston = require('winston');
 require('winston-daily-rotate-file');
 
-var app = express();
-var server = http.createServer(app);
 var date = new Date();
 var url = "mongodb://localhost:27017/";
 var logDir = '//mamafil01/automatn_pub/level 2 web/logs';
