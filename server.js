@@ -63,6 +63,11 @@ app.get('/', function (req, res) {
 users = [];
 ids = [];
 
+// Error handling
+nspIndex.on('error', function (exc) {
+    logger.error("nspIndex Socket Exception: " + exc);
+});
+
 // Update index.htm with status of servers
 hostNames.forEach(function(host){
     setInterval(function() {
@@ -137,6 +142,11 @@ nspChat.on('connection', function(socket)  {
         ids.splice(index, 1);
         users.splice(index, 1);
     });
+
+    // Error handling
+    socket.on('error', function (exc) {
+        logger.error("nspChat Socket Exception: " + exc);
+    });
 });
 
 nspEmail.on('connection', function(socket)  {
@@ -157,6 +167,11 @@ nspEmail.on('connection', function(socket)  {
                 db.close();
             });
         });
+    });
+
+    // Error handling
+    socket.on('error', function (exc) {
+        logger.error("nspEmail Socket Exception: " + exc);
     });
 });
 
