@@ -23,12 +23,15 @@ How to get started with development:
 10. Remember to commit changes as you go!
 
 How to run the server in production:
-1. Go to Automatn_Pub\Level 2 Web and open a new command window
-2. Enter node server.js
-3. Your computer is now a server capable of handling HTTP requests across the LAN
-4. Anyone can go to http://youripaddress and they will be redirected to the website
+1. Make sure that IP address in the server.listen() function in server.js is set to the IP address of the machine running the site
+   This tells Node.js to listen for client connections on that IP address
+   Remember that users must change the IP address that they connect to unless a DNS is implemented on the network to reolve the IP to a URL  
+2. Go to Automatn_Pub\Level 2 Web and open a new command window
+3. Enter node server.js
+4. Your computer is now a server capable of handling HTTP requests across the LAN
+5. Anyone can go to http://youripaddress and they will be redirected to the website
 
-Hoe to manage the database:
+How to manage the database:
 The database files are stored in Automatn_Pub\Level 2 Web\data
 This database uses MongoDB which is a NoSQL database
 It's easy to modify the database usign MongoDB's UI - Compass
